@@ -24,10 +24,18 @@ publishing {
 
 	repositories {
 		maven {
+			//GCP Cloud Storage bucket
 			//url "gcs://my-mvn-repository/maven/release"
-			def releasesRepoUrl = "gcs://my-mvn-repository/maven/release"
-			def snapshotsRepoUrl = "gcs://my-mvn-repository/maven/snapshot"
-			url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+			//def releasesRepoUrl = "gcs://my-mvn-repository/maven/release"
+			//def snapshotsRepoUrl = "gcs://my-mvn-repository/maven/snapshot"
+			//url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+			//AWS S3 bucket
+			url System.getenv('s3ArtifactUrl')
+			credentials(AwsCredentials) {
+				accessKey = System.getenv('awsAccessKeyId')
+				secretKey = System.getenv('awsSecretAccessKey')
+			}
 		}
 	}
 }
